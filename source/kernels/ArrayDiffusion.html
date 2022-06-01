@@ -1,0 +1,379 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>ArrayDiffusion | Moltres</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/moltres.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down">Moltres</a><a href="https://github.com/arfc/moltres" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="a8055128-651e-40d4-86b4-a9228b916c0c" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="43e42765-8f2d-48f5-8708-c6f9dd0f70c1" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d465cfe9-729b-4054-a345-0eeff75ccd4e" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="0824969b-1d7c-4d35-88ec-3645afb82c5b"><i class="material-icons">menu</i></a><ul class="sidenav" id="0824969b-1d7c-4d35-88ec-3645afb82c5b"><li><a href="#!" class="dropdown-trigger" data-target="f78c8431-8faa-4fa7-9423-a3ccf23a75f0" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="f6041e45-cfb1-4c7d-a9c2-e3e232ccf91c" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="637754dc-4e08-469f-b618-ed9a1db8893f" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="a8055128-651e-40d4-86b4-a9228b916c0c"><li><a href="../../getting_started/installation.html">Install Moltres</a></li><li><a href="../../getting_started/tutorials.html">Tutorials</a></li></ul><ul class="dropdown-content" id="43e42765-8f2d-48f5-8708-c6f9dd0f70c1"><li><a href="../../syntax/index.html">Moltres Syntax</a></li><li><a href="https://mooseframework.inl.gov/source/index.html">MOOSE Syntax</a></li><li><a href="../../doxygen/classes.html">Moltres Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="../../development/contributing.html">Contributing</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="d465cfe9-729b-4054-a345-0eeff75ccd4e"><li><a href="https://github.com/arfc/moltres/discussions">Moltres Discussion Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussion Forum</a></li></ul><ul class="dropdown-content" id="f78c8431-8faa-4fa7-9423-a3ccf23a75f0"><li><a href="../../getting_started/installation.html">Install Moltres</a></li><li><a href="../../getting_started/tutorials.html">Tutorials</a></li></ul><ul class="dropdown-content" id="f6041e45-cfb1-4c7d-a9c2-e3e232ccf91c"><li><a href="../../syntax/index.html">Moltres Syntax</a></li><li><a href="https://mooseframework.inl.gov/source/index.html">MOOSE Syntax</a></li><li><a href="../../doxygen/classes.html">Moltres Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="../../development/contributing.html">Contributing</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="637754dc-4e08-469f-b618-ed9a1db8893f"><li><a href="https://github.com/arfc/moltres/discussions">Moltres Discussion Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussion Forum</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">kernels</span><a href="#" class="breadcrumb">ArrayDiffusion</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="2c5a85c2-eaa7-4638-b9de-9c03535ec377" data-section-level="1" data-section-text="ArrayDiffusion"><h1 id="arraydiffusion">ArrayDiffusion</h1><section class="scrollspy" id="0779898a-e508-4efb-8281-d793fb4cb4ad" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>This array kernel implements the following piece of a weak form:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-177ce00c-247a-4c41-a272-d026584c1aba"></span><script>var element = document.getElementById("moose-equation-177ce00c-247a-4c41-a272-d026584c1aba");katex.render("(\\nabla \\vec{u}^\\ast, \\mathbf{D} \\nabla \\vec{u}),", element, {displayMode:true,throwOnError:false});</script></span> which is expanded as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-2677b20a-4afb-4dcc-83ce-945c8cc5981a"></span><script>var element = document.getElementById("moose-equation-2677b20a-4afb-4dcc-83ce-945c8cc5981a");katex.render("(\\nabla \\vec{u}^\\ast, \\mathbf{D} \\nabla \\vec{u}) = \\sum_{p=1}^N w_p \\sum_{q=1}^N (\\nabla u_p^\\ast, D_{p,q} \\nabla u_q),", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-7a2bdbe2-9155-44df-a0e9-409e59b75853"><script>var element = document.getElementById("moose-equation-7a2bdbe2-9155-44df-a0e9-409e59b75853");katex.render("\\vec{u}^\\ast", element, {displayMode:false,throwOnError:false});</script></span> is the test function, <span class="moose-katex-inline-equation" id="moose-equation-0720882a-7b3b-4c58-b7f1-8a485deb8b0e"><script>var element = document.getElementById("moose-equation-0720882a-7b3b-4c58-b7f1-8a485deb8b0e");katex.render("\\vec{u}", element, {displayMode:false,throwOnError:false});</script></span> is the finite element solution and <span class="moose-katex-inline-equation" id="moose-equation-aa5534a6-a038-4757-bf2a-27db278163a0"><script>var element = document.getElementById("moose-equation-aa5534a6-a038-4757-bf2a-27db278163a0");katex.render("\\mathbf{D}", element, {displayMode:false,throwOnError:false});</script></span> is the diffusion coefficients. <span class="moose-katex-inline-equation" id="moose-equation-ccd21925-99d4-4a1d-89d4-c03ad0a12c37"><script>var element = document.getElementById("moose-equation-ccd21925-99d4-4a1d-89d4-c03ad0a12c37");katex.render("\\vec{u}", element, {displayMode:false,throwOnError:false});</script></span> is an array variable that has <span class="moose-katex-inline-equation" id="moose-equation-9d7e581a-67e6-4004-a9f7-d5b0969bddd3"><script>var element = document.getElementById("moose-equation-9d7e581a-67e6-4004-a9f7-d5b0969bddd3");katex.render("N", element, {displayMode:false,throwOnError:false});</script></span> number of components. <span class="moose-katex-inline-equation" id="moose-equation-d69ebfb6-32bd-4933-b969-17091e1f4a59"><script>var element = document.getElementById("moose-equation-d69ebfb6-32bd-4933-b969-17091e1f4a59");katex.render("w_p, p=1,\\cdots,N", element, {displayMode:false,throwOnError:false});</script></span> is the scalings of all components of the array variable. The size of the vector test function <span class="moose-katex-inline-equation" id="moose-equation-2d3c2765-d040-44d7-8dc6-bdf2d5ce19a1"><script>var element = document.getElementById("moose-equation-2d3c2765-d040-44d7-8dc6-bdf2d5ce19a1");katex.render("\\vec{u}^\\ast", element, {displayMode:false,throwOnError:false});</script></span> is the same as the size of <span class="moose-katex-inline-equation" id="moose-equation-d83da234-dab8-4392-bf80-327d8d8648b4"><script>var element = document.getElementById("moose-equation-d83da234-dab8-4392-bf80-327d8d8648b4");katex.render("\\vec{u}", element, {displayMode:false,throwOnError:false});</script></span>. The kernel can be furthur spelled out as <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-0608a27c-0482-45cd-85d8-f15a5685d833"></span><span class="moose-katex-equation-number">(1)</span><script>var element = document.getElementById("moose-equation-0608a27c-0482-45cd-85d8-f15a5685d833");katex.render("\\sum_{p=1}^N w_p \\sum_{q=1}^N (\\nabla u_p^\\ast, D_{p,q} \\nabla u_q) = \\sum_{p=1}^N w_p \\sum_{q=1}^N \\sum_{e} \\int_e D_{p,q}(x) \\nabla u_p^\\ast (x) \\cdot \\nabla u_q(x)\\,dx = \\sum_{p=1}^N w_p \\sum_{q=1}^N \\sum_{e} \\sum_{i=1}^{N_{\\text{dof}}} \\sum_{j=1}^{N_{\\text{dof}}} u_{p,i}^\\ast u_{q,j} \\sum_{\\text{qp}=1}^{N_{qp}} (|J|w)_{\\text{qp}} D_{p,q,\\text{qp}} \\nabla b_{i,\\text{qp}} \\cdot \\nabla b_{j,\\text{qp}}, ", element, {displayMode:true,throwOnError:false});</script></span> where <span class="moose-katex-inline-equation" id="moose-equation-ccfe87ba-b424-4fa7-84a4-cb832a6891c9"><script>var element = document.getElementById("moose-equation-ccfe87ba-b424-4fa7-84a4-cb832a6891c9");katex.render("e", element, {displayMode:false,throwOnError:false});</script></span> denotes elements of the mesh; <span class="moose-katex-inline-equation" id="moose-equation-c499d677-347b-41d9-aebd-222e3b92b685"><script>var element = document.getElementById("moose-equation-c499d677-347b-41d9-aebd-222e3b92b685");katex.render("N_\\text{dof}", element, {displayMode:false,throwOnError:false});</script></span> is the number of shape functions on the local element; <span class="moose-katex-inline-equation" id="moose-equation-0c4fe811-c7ee-4590-bd62-7e628cb631ed"><script>var element = document.getElementById("moose-equation-0c4fe811-c7ee-4590-bd62-7e628cb631ed");katex.render("N_\\text{qp}", element, {displayMode:false,throwOnError:false});</script></span> is the number of quadrature points for doing the spatial integration over an element. <span class="moose-katex-inline-equation" id="moose-equation-8ef713da-8e01-4825-bf97-c22c30b35e1c"><script>var element = document.getElementById("moose-equation-8ef713da-8e01-4825-bf97-c22c30b35e1c");katex.render("u_{p,i}^\\ast", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-5d3e9c55-32ec-4e5e-89fb-036d11675a2d"><script>var element = document.getElementById("moose-equation-5d3e9c55-32ec-4e5e-89fb-036d11675a2d");katex.render("u_{p,i}^\\ast", element, {displayMode:false,throwOnError:false});</script></span> are the expansion coefficients for the test function and the solution respectively, often referred as degrees of freedom. Subscript <span class="moose-katex-inline-equation" id="moose-equation-eefeeec4-9077-4956-8329-133fb95205e8"><script>var element = document.getElementById("moose-equation-eefeeec4-9077-4956-8329-133fb95205e8");katex.render("\\text{qp}", element, {displayMode:false,throwOnError:false});</script></span> indicates that the associated quantities are evaluated on a quadrature point. <span class="moose-katex-inline-equation" id="moose-equation-ef1fdfba-cc07-45fb-8746-a2bebcab19f6"><script>var element = document.getElementById("moose-equation-ef1fdfba-cc07-45fb-8746-a2bebcab19f6");katex.render("(|J|w)_\\text{qp}", element, {displayMode:false,throwOnError:false});</script></span> is the determinant of Jacobian, that transform a physical element to a reference element where the shape functions <span class="moose-katex-inline-equation" id="moose-equation-723acc5a-ddec-4b73-830d-60bfbfa38a12"><script>var element = document.getElementById("moose-equation-723acc5a-ddec-4b73-830d-60bfbfa38a12");katex.render("b_i(\\hat{x}),i=1,\\cdots,N_\\text{dof}", element, {displayMode:false,throwOnError:false});</script></span> are defined, times local quadrature weighting. It is noted that the test functions of all components are identical because all components of an array variable share the same finite element family and order.</p><p>We can rearrange the fully expanded <a href="#moose-equation-0608a27c-0482-45cd-85d8-f15a5685d833">Eq. (1)</a> into <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-b4ab7c8b-fb8b-4b69-a704-654c5d243018"></span><script>var element = document.getElementById("moose-equation-b4ab7c8b-fb8b-4b69-a704-654c5d243018");katex.render("(\\nabla \\vec{u}^\\ast, \\mathbf{D} \\nabla \\vec{u}) = \\sum_{e} \\sum_{i=1}^{N_{\\text{dof}}} \\sum_{\\text{qp}=1}^{N_{qp}} (|J|w)_{\\text{qp}} \\vec{w}_p\\vec{u}_i^\\ast \\underline{\\mathbf{D}_{\\text{qp}} \\nabla \\vec{u}_{\\text{qp}} \\cdot \\nabla b_{i,\\text{qp}}},", element, {displayMode:true,throwOnError:false});</script></span> where the underlined term is the array provided by <a class="moose-source-filename tooltipped modal-trigger" href="#92fe00d5-d538-46d2-a51f-10804046137e">ArrayDiffusion::computeQpResidual</a>. The element, shape function and quadrature point summations are taken care of by MOOSE. It is noted that since test functions are arbitrary, <span class="moose-katex-inline-equation" id="moose-equation-64344fe8-daeb-413b-93a1-83d012760829"><script>var element = document.getElementById("moose-equation-64344fe8-daeb-413b-93a1-83d012760829");katex.render("\\vec{u}_i^\\ast", element, {displayMode:false,throwOnError:false});</script></span> can be viewed as an index indicator with which the local residual goes into the global residual vector. Note that <span class="moose-katex-inline-equation" id="moose-equation-0b095dcd-00c4-4a92-8eeb-4d80e2d2e4bf"><script>var element = document.getElementById("moose-equation-0b095dcd-00c4-4a92-8eeb-4d80e2d2e4bf");katex.render("\\vec{a}\\vec{b}", element, {displayMode:false,throwOnError:false});</script></span> represents element-wise multiplication, i.e. <span class="moose-katex-inline-equation" id="moose-equation-ea3176b6-6529-4fb6-88f4-c853acad9492"><script>var element = document.getElementById("moose-equation-ea3176b6-6529-4fb6-88f4-c853acad9492");katex.render("\\vec{a}\\vec{b}", element, {displayMode:false,throwOnError:false});</script></span> is equal to vector whose <em>i</em>th element is <span class="moose-katex-inline-equation" id="moose-equation-e564a722-dc9f-4b39-a939-fd1c041e169b"><script>var element = document.getElementById("moose-equation-e564a722-dc9f-4b39-a939-fd1c041e169b");katex.render("a_i \\times b_i", element, {displayMode:false,throwOnError:false});</script></span>, where <span class="moose-katex-inline-equation" id="moose-equation-1138310e-8719-40bc-b97c-6ffb196224bc"><script>var element = document.getElementById("moose-equation-1138310e-8719-40bc-b97c-6ffb196224bc");katex.render("a", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-2aaef1f1-36f5-4cbb-87a7-400546fc1dfe"><script>var element = document.getElementById("moose-equation-2aaef1f1-36f5-4cbb-87a7-400546fc1dfe");katex.render("b", element, {displayMode:false,throwOnError:false});</script></span> are two generic vectors.</p><p>In general, the diffusion coefficient <span class="moose-katex-inline-equation" id="moose-equation-ad405684-7264-4186-8856-236fe6c8c731"><script>var element = document.getElementById("moose-equation-ad405684-7264-4186-8856-236fe6c8c731");katex.render("\\mathbf{D}", element, {displayMode:false,throwOnError:false});</script></span> is a square matrix with the size of the number of components. When it is a diagonal matrix, it can be represented by an array. In such a case, the components are not coupled with this array diffusion kernel. If all elements of the diffusion coefficient vector are the same, we can use a scalar diffusion coefficient. Thus this kernel gives users an option to set the type of diffusion coefficient with a parameter named as <em>diffusion_coefficient_type</em>. Users can set it to <em>scalar</em>, <em>array</em> or <em>full</em> cooresponding to scalar, diagonal matrix and full matrix respectively. Its default value is <em>array</em>.</p><p>With some further transformation, the kernel becomes <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-a204d3f7-7448-4f09-aa09-a8fa06e08226"></span><script>var element = document.getElementById("moose-equation-a204d3f7-7448-4f09-aa09-a8fa06e08226");katex.render("(\\nabla \\vec{u}^\\ast, \\mathbf{D} \\nabla \\vec{u}) = \\sum_{e} \\sum_{i=1}^{N_{\\text{dof}}} \\sum_{j=1}^{N_{\\text{dof}}} \\sum_{\\text{qp}=1}^{N_{qp}} (|J|w)_{\\text{qp}} \\vec{w}_p\\vec{u}_i^\\ast \\underline{\\mathbf{D}_{\\text{qp}} \\nabla b_{j,\\text{qp}} \\cdot \\nabla b_{i,\\text{qp}}} \\vec{u}_j,", element, {displayMode:true,throwOnError:false});</script></span> where the underlined part is the local Jacobian evaluated by <a class="moose-source-filename tooltipped modal-trigger" href="#df5a49f2-adb9-4d2f-9943-371582a016b9">ArrayDiffusion::computeQpJacobian</a> and <a class="moose-source-filename tooltipped modal-trigger" href="#f8f13562-f18c-42a6-9299-101a0608bf45">ArrayDiffusion::computeQpOffDiagJacobian</a>.</p></section><section class="scrollspy" id="629f20e3-0b2b-4655-a82b-b9c4d94bbc2a" data-section-level="2" data-section-text="Example Input Syntax"><h2 id="example-input-syntax">Example Input Syntax</h2><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Kernels]
+  [diff]
+    type = ArrayDiffusion
+    variable = u
+    diffusion_coefficient = dc
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#07e8fd19-0757-4778-a0f9-3b6bf087ad76">(moose/test/tests/kernels/array_kernels/array_diffusion_test.i)</a></section><section class="scrollspy" id="0dfe3625-3fb9-49e8-bc8f-d37aeb55b4ac" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="ad171645-4872-4c15-ab0f-9dcc7e6bf63d" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">diffusion_coefficient</span><span class="moose-parameter-header-description">The name of the diffusivity, can be scalar, vector, or matrix.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of the diffusivity, can be scalar, vector, or matrix.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this residual object operates on</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>NonlinearVariableName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this residual object operates on</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="15fd56be-749c-4c91-b4d0-a126056ce5c9" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">displacements</span><span class="moose-parameter-header-description">The displacements</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The displacements</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="c7565068-3f9d-4e55-84e0-71282cdc338b" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">diag_save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this Kernel's diagonal Jacobian contributions to. Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this Kernel's diagonal Jacobian contributions to. Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this Kernel's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this Kernel's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="aaa5e096-796a-4a23-900b-a388aa5a3408" data-section-level="3" data-section-text="Tagging Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">extra_matrix_tags</span><span class="moose-parameter-header-description">The extra tags for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_vector_tags</span><span class="moose-parameter-header-description">The extra tags for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the vectors this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_tags</span><span class="moose-parameter-header-default">system</span><span class="moose-parameter-header-description">The tag for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>system</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, system</p><p class="moose-parameter-description"><span>Description:</span>The tag for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">vector_tags</span><span class="moose-parameter-header-default">nontime</span><span class="moose-parameter-header-description">The tag for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nontime</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, time</p><p class="moose-parameter-description"><span>Description:</span>The tag for the vectors this Kernel should fill</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Tagging Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="92fe00d5-d538-46d2-a51f-10804046137e"><div class="modal-content"><h4>(doc/ArrayDiffusion.C)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://www.mooseframework.org
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;ArrayDiffusion.h&quot;
+
+registerMooseObject(&quot;MooseApp&quot;, ArrayDiffusion);
+
+defineLegacyParams(ArrayDiffusion);
+
+InputParameters
+ArrayDiffusion::validParams()
+{
+  InputParameters params = ArrayKernel::validParams();
+  params.addRequiredParam&lt;MaterialPropertyName&gt;(&quot;diffusion_coefficient&quot;,
+                                                &quot;The name of the diffusivity, &quot;
+                                                &quot;can be scalar, vector, or matrix.&quot;);
+  params.addClassDescription(
+      &quot;The array Laplacian operator ($-\\nabla \\cdot \\nabla u$), with the weak &quot;
+      &quot;form of $(\\nabla \\phi_i, \\nabla u_h)$.&quot;);
+  return params;
+}
+
+ArrayDiffusion::ArrayDiffusion(const InputParameters &amp; parameters)
+  : ArrayKernel(parameters),
+    _d(hasMaterialProperty&lt;Real&gt;(&quot;diffusion_coefficient&quot;)
+           ? &amp;getMaterialProperty&lt;Real&gt;(&quot;diffusion_coefficient&quot;)
+           : nullptr),
+    _d_array(hasMaterialProperty&lt;RealEigenVector&gt;(&quot;diffusion_coefficient&quot;)
+                 ? &amp;getMaterialProperty&lt;RealEigenVector&gt;(&quot;diffusion_coefficient&quot;)
+                 : nullptr),
+    _d_2d_array(hasMaterialProperty&lt;RealEigenMatrix&gt;(&quot;diffusion_coefficient&quot;)
+                    ? &amp;getMaterialProperty&lt;RealEigenMatrix&gt;(&quot;diffusion_coefficient&quot;)
+                    : nullptr)
+{
+  if (!_d &amp;&amp; !_d_array &amp;&amp; !_d_2d_array)
+  {
+    MaterialPropertyName mat = getParam&lt;MaterialPropertyName&gt;(&quot;diffusion_coefficient&quot;);
+    mooseError(&quot;Property &quot; + mat + &quot; is of unsupported type for ArrayDiffusion&quot;);
+  }
+}
+
+void
+ArrayDiffusion::initQpResidual()
+{
+  if (_d_array)
+  {
+    mooseAssert((*_d_array)[_qp].size() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+  }
+  else if (_d_2d_array)
+  {
+    mooseAssert((*_d_2d_array)[_qp].cols() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+    mooseAssert((*_d_2d_array)[_qp].rows() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+  }
+}
+
+void
+ArrayDiffusion::computeQpResidual(RealEigenVector &amp; residual)
+{
+  // WARNING: the noalias() syntax is an Eigen optimization tactic, it avoids creating
+  // a temporary object for the matrix multiplication on the right-hand-side. However,
+  // it should be used with caution because it could cause unintended results,
+  // developers should NOT use it if the vector on the left-hand-side appears on the
+  // right-hand-side, for instance:
+  //   vector = matrix * vector;
+  // See http://eigen.tuxfamily.org/dox/group__TopicAliasing.html for more details.
+  if (_d)
+    residual.noalias() = (*_d)[_qp] * _grad_u[_qp] * _array_grad_test[_i][_qp];
+  else if (_d_array)
+    residual.noalias() = (*_d_array)[_qp].asDiagonal() * _grad_u[_qp] * _array_grad_test[_i][_qp];
+  else
+    residual.noalias() = (*_d_2d_array)[_qp] * _grad_u[_qp] * _array_grad_test[_i][_qp];
+}
+
+RealEigenVector
+ArrayDiffusion::computeQpJacobian()
+{
+  if (_d)
+    return RealEigenVector::Constant(_var.count(),
+                                     _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d)[_qp]);
+  else if (_d_array)
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_array)[_qp];
+  else
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp].diagonal();
+}
+
+RealEigenMatrix
+ArrayDiffusion::computeQpOffDiagJacobian(const MooseVariableFEBase &amp; jvar)
+{
+  if (jvar.number() == _var.number() &amp;&amp; _d_2d_array)
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp];
+  else
+    return ArrayKernel::computeQpOffDiagJacobian(jvar);
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="df5a49f2-adb9-4d2f-9943-371582a016b9"><div class="modal-content"><h4>(doc/ArrayDiffusion.C)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://www.mooseframework.org
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;ArrayDiffusion.h&quot;
+
+registerMooseObject(&quot;MooseApp&quot;, ArrayDiffusion);
+
+defineLegacyParams(ArrayDiffusion);
+
+InputParameters
+ArrayDiffusion::validParams()
+{
+  InputParameters params = ArrayKernel::validParams();
+  params.addRequiredParam&lt;MaterialPropertyName&gt;(&quot;diffusion_coefficient&quot;,
+                                                &quot;The name of the diffusivity, &quot;
+                                                &quot;can be scalar, vector, or matrix.&quot;);
+  params.addClassDescription(
+      &quot;The array Laplacian operator ($-\\nabla \\cdot \\nabla u$), with the weak &quot;
+      &quot;form of $(\\nabla \\phi_i, \\nabla u_h)$.&quot;);
+  return params;
+}
+
+ArrayDiffusion::ArrayDiffusion(const InputParameters &amp; parameters)
+  : ArrayKernel(parameters),
+    _d(hasMaterialProperty&lt;Real&gt;(&quot;diffusion_coefficient&quot;)
+           ? &amp;getMaterialProperty&lt;Real&gt;(&quot;diffusion_coefficient&quot;)
+           : nullptr),
+    _d_array(hasMaterialProperty&lt;RealEigenVector&gt;(&quot;diffusion_coefficient&quot;)
+                 ? &amp;getMaterialProperty&lt;RealEigenVector&gt;(&quot;diffusion_coefficient&quot;)
+                 : nullptr),
+    _d_2d_array(hasMaterialProperty&lt;RealEigenMatrix&gt;(&quot;diffusion_coefficient&quot;)
+                    ? &amp;getMaterialProperty&lt;RealEigenMatrix&gt;(&quot;diffusion_coefficient&quot;)
+                    : nullptr)
+{
+  if (!_d &amp;&amp; !_d_array &amp;&amp; !_d_2d_array)
+  {
+    MaterialPropertyName mat = getParam&lt;MaterialPropertyName&gt;(&quot;diffusion_coefficient&quot;);
+    mooseError(&quot;Property &quot; + mat + &quot; is of unsupported type for ArrayDiffusion&quot;);
+  }
+}
+
+void
+ArrayDiffusion::initQpResidual()
+{
+  if (_d_array)
+  {
+    mooseAssert((*_d_array)[_qp].size() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+  }
+  else if (_d_2d_array)
+  {
+    mooseAssert((*_d_2d_array)[_qp].cols() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+    mooseAssert((*_d_2d_array)[_qp].rows() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+  }
+}
+
+void
+ArrayDiffusion::computeQpResidual(RealEigenVector &amp; residual)
+{
+  // WARNING: the noalias() syntax is an Eigen optimization tactic, it avoids creating
+  // a temporary object for the matrix multiplication on the right-hand-side. However,
+  // it should be used with caution because it could cause unintended results,
+  // developers should NOT use it if the vector on the left-hand-side appears on the
+  // right-hand-side, for instance:
+  //   vector = matrix * vector;
+  // See http://eigen.tuxfamily.org/dox/group__TopicAliasing.html for more details.
+  if (_d)
+    residual.noalias() = (*_d)[_qp] * _grad_u[_qp] * _array_grad_test[_i][_qp];
+  else if (_d_array)
+    residual.noalias() = (*_d_array)[_qp].asDiagonal() * _grad_u[_qp] * _array_grad_test[_i][_qp];
+  else
+    residual.noalias() = (*_d_2d_array)[_qp] * _grad_u[_qp] * _array_grad_test[_i][_qp];
+}
+
+RealEigenVector
+ArrayDiffusion::computeQpJacobian()
+{
+  if (_d)
+    return RealEigenVector::Constant(_var.count(),
+                                     _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d)[_qp]);
+  else if (_d_array)
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_array)[_qp];
+  else
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp].diagonal();
+}
+
+RealEigenMatrix
+ArrayDiffusion::computeQpOffDiagJacobian(const MooseVariableFEBase &amp; jvar)
+{
+  if (jvar.number() == _var.number() &amp;&amp; _d_2d_array)
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp];
+  else
+    return ArrayKernel::computeQpOffDiagJacobian(jvar);
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="f8f13562-f18c-42a6-9299-101a0608bf45"><div class="modal-content"><h4>(doc/ArrayDiffusion.C)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://www.mooseframework.org
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;ArrayDiffusion.h&quot;
+
+registerMooseObject(&quot;MooseApp&quot;, ArrayDiffusion);
+
+defineLegacyParams(ArrayDiffusion);
+
+InputParameters
+ArrayDiffusion::validParams()
+{
+  InputParameters params = ArrayKernel::validParams();
+  params.addRequiredParam&lt;MaterialPropertyName&gt;(&quot;diffusion_coefficient&quot;,
+                                                &quot;The name of the diffusivity, &quot;
+                                                &quot;can be scalar, vector, or matrix.&quot;);
+  params.addClassDescription(
+      &quot;The array Laplacian operator ($-\\nabla \\cdot \\nabla u$), with the weak &quot;
+      &quot;form of $(\\nabla \\phi_i, \\nabla u_h)$.&quot;);
+  return params;
+}
+
+ArrayDiffusion::ArrayDiffusion(const InputParameters &amp; parameters)
+  : ArrayKernel(parameters),
+    _d(hasMaterialProperty&lt;Real&gt;(&quot;diffusion_coefficient&quot;)
+           ? &amp;getMaterialProperty&lt;Real&gt;(&quot;diffusion_coefficient&quot;)
+           : nullptr),
+    _d_array(hasMaterialProperty&lt;RealEigenVector&gt;(&quot;diffusion_coefficient&quot;)
+                 ? &amp;getMaterialProperty&lt;RealEigenVector&gt;(&quot;diffusion_coefficient&quot;)
+                 : nullptr),
+    _d_2d_array(hasMaterialProperty&lt;RealEigenMatrix&gt;(&quot;diffusion_coefficient&quot;)
+                    ? &amp;getMaterialProperty&lt;RealEigenMatrix&gt;(&quot;diffusion_coefficient&quot;)
+                    : nullptr)
+{
+  if (!_d &amp;&amp; !_d_array &amp;&amp; !_d_2d_array)
+  {
+    MaterialPropertyName mat = getParam&lt;MaterialPropertyName&gt;(&quot;diffusion_coefficient&quot;);
+    mooseError(&quot;Property &quot; + mat + &quot; is of unsupported type for ArrayDiffusion&quot;);
+  }
+}
+
+void
+ArrayDiffusion::initQpResidual()
+{
+  if (_d_array)
+  {
+    mooseAssert((*_d_array)[_qp].size() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+  }
+  else if (_d_2d_array)
+  {
+    mooseAssert((*_d_2d_array)[_qp].cols() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+    mooseAssert((*_d_2d_array)[_qp].rows() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+  }
+}
+
+void
+ArrayDiffusion::computeQpResidual(RealEigenVector &amp; residual)
+{
+  // WARNING: the noalias() syntax is an Eigen optimization tactic, it avoids creating
+  // a temporary object for the matrix multiplication on the right-hand-side. However,
+  // it should be used with caution because it could cause unintended results,
+  // developers should NOT use it if the vector on the left-hand-side appears on the
+  // right-hand-side, for instance:
+  //   vector = matrix * vector;
+  // See http://eigen.tuxfamily.org/dox/group__TopicAliasing.html for more details.
+  if (_d)
+    residual.noalias() = (*_d)[_qp] * _grad_u[_qp] * _array_grad_test[_i][_qp];
+  else if (_d_array)
+    residual.noalias() = (*_d_array)[_qp].asDiagonal() * _grad_u[_qp] * _array_grad_test[_i][_qp];
+  else
+    residual.noalias() = (*_d_2d_array)[_qp] * _grad_u[_qp] * _array_grad_test[_i][_qp];
+}
+
+RealEigenVector
+ArrayDiffusion::computeQpJacobian()
+{
+  if (_d)
+    return RealEigenVector::Constant(_var.count(),
+                                     _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d)[_qp]);
+  else if (_d_array)
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_array)[_qp];
+  else
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp].diagonal();
+}
+
+RealEigenMatrix
+ArrayDiffusion::computeQpOffDiagJacobian(const MooseVariableFEBase &amp; jvar)
+{
+  if (jvar.number() == _var.number() &amp;&amp; _d_2d_array)
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp];
+  else
+    return ArrayKernel::computeQpOffDiagJacobian(jvar);
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="07e8fd19-0757-4778-a0f9-3b6bf087ad76"><div class="modal-content"><h4>(moose/test/tests/kernels/array_kernels/array_diffusion_test.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 2
+  nx = 4
+  ny = 4
+[]
+
+[Variables]
+  [u]
+    order = FIRST
+    family = LAGRANGE
+    components = 2
+    scaling = &#x27;.9 .9&#x27;
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = ArrayDiffusion
+    variable = u
+    diffusion_coefficient = dc
+  []
+[]
+
+[BCs]
+  [left]
+    type = ArrayDirichletBC
+    variable = u
+    boundary = 1
+    values = &#x27;0 0&#x27;
+  []
+
+  [right]
+    type = ArrayDirichletBC
+    variable = u
+    boundary = 2
+    values = &#x27;1 2&#x27;
+  []
+[]
+
+[Materials]
+  [dc]
+    type = GenericConstantArray
+    prop_name = dc
+    prop_value = &#x27;1 1&#x27;
+  []
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = &#x27;NEWTON&#x27;
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#0779898a-e508-4efb-8281-d793fb4cb4ad" class="tooltipped" data-position="left" data-tooltip="Description">Description</a></li><li><a href="#629f20e3-0b2b-4655-a82b-b9c4d94bbc2a" class="tooltipped" data-position="left" data-tooltip="Example Input Syntax">Example Input Syntax</a></li><li><a href="#0dfe3625-3fb9-49e8-bc8f-d37aeb55b4ac" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
