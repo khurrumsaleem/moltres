@@ -1,171 +1,49 @@
-<!DOCTYPE html><head><meta charset="UTF-8"><title>Finite Volume Design Decisions in MOOSE | Moltres</title><link href="../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/moltres.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../index.html" class="left moose-logo hide-on-med-and-down">Moltres</a><a href="https://github.com/arfc/moltres" class="right"><img src="../media/framework/github-logo.png" class="github-mark"></img><img src="../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="96e1f425-08cb-4469-99ec-c13d8b1c2bfa" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="0130ac0d-f5a1-46f1-8596-90d9c48cdbe0" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="fb7a7f2b-8d09-4b70-ab97-b1598618c256" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="42ad1cdd-1faf-4131-803b-3671b02eb5fa"><i class="material-icons">menu</i></a><ul class="sidenav" id="42ad1cdd-1faf-4131-803b-3671b02eb5fa"><li><a href="#!" class="dropdown-trigger" data-target="70af617b-cd13-467c-89e0-a6b30db87bcc" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="5e2be461-b99c-4c34-844b-15ace294b40d" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="6689a621-b65e-4423-ab74-ba727b9a03d8" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="96e1f425-08cb-4469-99ec-c13d8b1c2bfa"><li><a href="../getting_started/installation.html">Install Moltres</a></li><li><a href="../getting_started/tutorials.html">Tutorials</a></li></ul><ul class="dropdown-content" id="0130ac0d-f5a1-46f1-8596-90d9c48cdbe0"><li><a href="../syntax/index.html">Moltres Syntax</a></li><li><a href="https://mooseframework.inl.gov/source/index.html">MOOSE Syntax</a></li><li><a href="../doxygen/classes.html">Moltres Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="../development/contributing.html">Contributing</a></li><li><a href="../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="fb7a7f2b-8d09-4b70-ab97-b1598618c256"><li><a href="https://github.com/arfc/moltres/discussions">Moltres Discussion Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussion Forum</a></li></ul><ul class="dropdown-content" id="70af617b-cd13-467c-89e0-a6b30db87bcc"><li><a href="../getting_started/installation.html">Install Moltres</a></li><li><a href="../getting_started/tutorials.html">Tutorials</a></li></ul><ul class="dropdown-content" id="5e2be461-b99c-4c34-844b-15ace294b40d"><li><a href="../syntax/index.html">Moltres Syntax</a></li><li><a href="https://mooseframework.inl.gov/source/index.html">MOOSE Syntax</a></li><li><a href="../doxygen/classes.html">Moltres Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="../development/contributing.html">Contributing</a></li><li><a href="../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="6689a621-b65e-4423-ab74-ba727b9a03d8"><li><a href="https://github.com/arfc/moltres/discussions">Moltres Discussion Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussion Forum</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href="." class="breadcrumb">finite_volumes</a><a href="#" class="breadcrumb">fv_design</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="d12d1f2f-6a1d-4dca-b3b9-84b3ee7b405f" data-section-level="1" data-section-text="Finite Volume Design Decisions in MOOSE"><h1 id="finite-volume-design-decisions-in-moose">Finite Volume Design Decisions in MOOSE</h1><p>MOOSE has traditionally been a finite element (FE) framework.  It is built on and takes heavy advantage of the libMesh FE library.  Traditionally, the finite volume (FV) method doesn&#x27;t really have shape-functions to describe continuous solutions within mesh cells.  Instead it uses a constant solution within each mesh element/cell. Because of this, much of MOOSE&#x27;s use of libMesh for FE is not relevant for FV.  This document gives an overview of how FV is similar and different from FE with respect to implementation in MOOSE and explains why FV is designed and implemented in its current form.  In order to fully enable taking advantage of perfomance opportunities and to simplify the FV method implementation in MOOSE, a new set of FV-specific systems was built along-side the MOOSE FE infrastructure.  As a new set of systems being created after MOOSE has received powerful automatic differentiation (AD) support, the FV systems (at least initially) are only being created with AD support in mind, and non-AD (manual jacobian) versions will only be supported if a pressing need arises.</p><section class="scrollspy" id="49a64f6c-5dac-4060-bb91-38671982d6f1" data-section-level="2" data-section-text="Variables"><h2 id="variables">Variables</h2><p>FV-specific (dependent) variable classes were create along side the FE-specific ones sharing common base functionality.  This is responsible for calculating and providing FV cell/face solution values to objects that need them.  Higher-order reconstruction will also be plumbed into here eventually. Ghost cells for boundary conditions and other important functionality is handled automatically at this level so kernel and boundary condition code can be written nearly like the FE equivalents.</p><p>Previously, the variable class hierarchy did not have a field-variable-specific intermediate class.  FV variables, however are field variables that need to be included in some field-variable operations performed in MOOSE.  This was not previously possible because FV variables would have to have shared their entire interface/API with FE variables - which would be a poor choice because of so many non-overlapping API needs between the two (e.g. no shape and test function related functions are needed for FV variables).  So a new field-variable intermediate class was introduced to the variable class heirarchy to facilitate appropriately separate APIs while allowing common operations to be performed on all field variables.</p></section><section class="scrollspy" id="4375e35c-4d92-4576-84ac-482894b74e42" data-section-level="2" data-section-text="FV Kernels"><h2 id="fv-kernels">FV Kernels</h2><p>Flux Kernels:</p><p>The FV method uses the Gauss-divergence theorem to convert volume integrals with a divergence operator into surface integrals representing flux of various quantities through faces between mesh cells. Unlike FE kernels, no test/weight function is needed.  Coupling between cells occurs from this numerical flux calculation on a face contributing to the mesh cells on both sides of it (with opposing directional sign).  Calculating these numerical fluxes requires access to variable values and properties on both sides of each face.  FE kernels, on the other hand, require only the one set of volumetric/elemental values for the cell of interest.  FV kernels also need to deal with things such as normal face vectors, cross-diffusion correction factors for non-orthogonal meshes, etc.  All these differences make it impractical and messy to try to integrate them both into the same MOOSE kernel system and motivated the decision to create a separate FV kernel system.</p><p>Elemental Kernels:</p><p>The FV method does have some element-based calculations from source and time terms that are just handled/called through the normal FE elemental residual and jacobian mesh loops.  Time derivative kernels and source terms fall in this category.</p></section><section class="scrollspy" id="2999fd46-10b9-4e4d-b7cc-6857501ce4f9" data-section-level="2" data-section-text="Shape Functions and Integration"><h2 id="shape-functions-and-integration">Shape Functions and Integration</h2><p>Because some basic aspects of FV are &quot;simpler&quot; than FE, there is opportunity to operate with a lower computational cost per element than with the FE method.  The FV implementation does the following differently than FE:</p><p>* skips initialization/storage of shape-function data structures</p><p>* skips calculation of dependent variable values at quadrature-points - the   coefficients (degrees of freedom) from the solution vector(s) can be   directly used. FV only needs that one value per cell.</p><p>* skips element integration routines/loops not needed for FV&#x27;s   cell-constant solution.</p><p>Taking full advantage of these and other opportunities will take significant work and FV performance can be expected to improve over time.  Some quadrature point concepts have been retained for FV in MOOSE. This allows for future expansion to higher-order cell solution variable representations in addition to preserving similarity of APIs for users already familiar with MOOSE&#x27;s other objects and systems.</p></section><section class="scrollspy" id="ac2d164d-3704-4c5b-aec9-586bf09adaaa" data-section-level="2" data-section-text="Looping over Faces"><h2 id="looping-over-faces">Looping over Faces</h2><p>Significant portions of the FV method are naturally cell-face oriented. libMesh does not provide facilities for looping over and working with faces. FV-specific data structures were created to facilitate looping over mesh faces to compute residual contributions from numerical fluxes.</p><p>A face loop was implemented along side existing element, node, etc. loops used for FE.  This is used for calculating numerical flux contributions from FV kernels and boundary conditions.  The face info metadata needed for FV is gathered up front (and recomputed whenever the mesh changes) and cached in MOOSE&#x27;s mesh data structure.  Needs with respect to Dirichlet boundary conditions among other things influenced the decision to have a face info data structure become a hub for objects to retrieve relevant information for calculating residual contributions - more discussion about this is done in the Boundary Conditions section.</p></section><section class="scrollspy" id="cb1fcea7-fa0a-4d69-8d06-4eed235161c6" data-section-level="2" data-section-text="Boundary Conditions"><h2 id="boundary-conditions">Boundary Conditions</h2><p>Similar reasoning to decisions about the FV kernel system motivated the creation of a separate FV boundary condition system as well.  While FV flux/integrated boundary conditions are somewhat similar to FE integrated BCs, they still lack test/weight functions.  FV Dirichlet BCs, however must be implemented completedly differently than in FE and strongly motivate the creation of a separate FV BC system.</p><p>Dirichlet boundary conditions (BCs) in an FV method cannot be created by directly setting degrees of freedom like in an FE method because the FV degrees of freedom do not exist on the mesh boundary.  There are various approaches for dealing with this in FV.  A ghost-element approach was selected due to its popularity and robustness.  In this approach, Dirichlet BCs are implemented as a weak BC.  To do this, the normal flux kernel terms are applied at the mesh boundary faces.  Since flux kernels are calculated using information from cells on both sides of the face, we use the desired Dirichlet BC value to extrapolate a &quot;ghost&quot; cell value for the side of the face that has no actuall mesh cell.  Other necessary cell properties are also reflected/mirrored from the existing cell.  A design was chosen that allows handling ghost-element creation and use by existing flux kernels automatically for enforcement of Dirichlet BCs.  This procedure results in the Dirichlet BC objects not actually being respondible for calculating residual contributions. They instead inform the ghost-element initialization while the normal flux BCs are used to calculate boundary residual contributions.  This and other differences motivated the creation of a separate FV BC system.</p><p>Many objects in MOOSE get information about the current mesh location by directly accessing their own and inherited member variables.  This becomes somewhat tricky to handle for FV because of the nature of ghost elements. Traditionally, if an object needed the cell volume, it would access an element pointer and use libMesh APIs.  This doesn&#x27;t work for elements that don&#x27;t exist, yet we still need to provide this information for calculating Dirichlet BC residual contributions.  We need to be able to provide information that doesn&#x27;t exist and we need to make sure code doesn&#x27;t try to access irrelevant or wrong information directly from the assembly, FEProblem, or other classes. For this reason, among others, for FV objects the convention has been established for objects to retrieve needed information from a face info object that is passed around rather than retrieving binding references to the usual mesh-related data.  If everyone gets needed information from this one place - it is easy to monitor when code may be doing the wrong thing.  It also becomes a simple matter to provide volumes for non-existing cells and add features that require intercepting and modifying any face information objects need.</p></section><section class="scrollspy" id="54f541d5-3761-46b9-a119-be97435a24b7" data-section-level="2" data-section-text="Reconstruction"><h2 id="reconstruction">Reconstruction</h2><p>Gradient reconstruction is implemented using the Green-Gauss method, e.g.</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-7e9a8084-538b-4d4f-947d-0e6b8eaab6af"></span><script>var element = document.getElementById("moose-equation-7e9a8084-538b-4d4f-947d-0e6b8eaab6af");katex.render("\\nabla \\phi_C = \\frac{1}{\\Omega} \\sum\\limits_{faces} \\phi_f \\vec{S}_f", element, {displayMode:true,throwOnError:false});</script></span></p><p>where <span class="moose-katex-inline-equation" id="moose-equation-9863edf2-6251-45d2-ba42-2c6adc55c558"><script>var element = document.getElementById("moose-equation-9863edf2-6251-45d2-ba42-2c6adc55c558");katex.render("\\phi_f", element, {displayMode:false,throwOnError:false});</script></span> is the value of the quantity of interest on the face and <span class="moose-katex-inline-equation" id="moose-equation-ddcdee8e-4386-4508-95b8-29eef25ce1fd"><script>var element = document.getElementById("moose-equation-ddcdee8e-4386-4508-95b8-29eef25ce1fd");katex.render("\\vec{S}_f", element, {displayMode:false,throwOnError:false});</script></span> is equal to the surface area times the outward normal, e.g. <span class="moose-katex-inline-equation" id="moose-equation-6f2e0d64-a6e9-41c3-bfa1-c3c8e378a08c"><script>var element = document.getElementById("moose-equation-6f2e0d64-a6e9-41c3-bfa1-c3c8e378a08c");katex.render("\\vec{S}_f = A\\hat{n}", element, {displayMode:false,throwOnError:false});</script></span>. The value of <span class="moose-katex-inline-equation" id="moose-equation-d2734828-57c4-4bae-a88f-61cfe059fae8"><script>var element = document.getElementById("moose-equation-d2734828-57c4-4bae-a88f-61cfe059fae8");katex.render("\\phi_f", element, {displayMode:false,throwOnError:false});</script></span> can be computed in a couple of ways. The first, which is the default in MOOSE, uses a compact stencil and does a simple linear interpolation between the neighboring cell center values to the face. The second uses an extended stencil, where the face value is taken to be a weighted average of the face vertex values, which are in turn taken to be a weighted average of the cell centers neighboring the point. To use the extended stencil method, you can specify your finite volume variable input block like the following:</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Variables]
-  [./v]
-    family = MONOMIAL
-    order = CONSTANT
-    fv = true
-    initial_condition = 1
-    type = MooseVariableFVReal
-    use_extended_stencil = true
-  [../]
-[]
-</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#acb91c86-d383-4a88-bc66-704ecb5a1dde">(moose/test/tests/fvkernels/mms/grad-reconstruction/extended-cartesian.i)</a><p>On regular, orthogonal meshes both the compact and extended stencils have demonstrated second order convergence with respect to mesh refinement. On a non-orthogonal mesh test (see the <a class="moose-source-filename tooltipped modal-trigger" href="#5020d8e6-994f-4018-a657-cf26e71ce119">compact</a> and <a class="moose-source-filename tooltipped modal-trigger" href="#b586d215-375e-46bd-b5e4-841167e897f8">extended</a> input files) the compact stencil displays second order convergence while the extended stencil drops a half order to 1.5 order convergence. On a <a class="moose-source-filename tooltipped modal-trigger" href="#02a5bdd1-8722-4b5e-a4e2-71b8070183b2">skewed mesh test</a> where skewness is introduced via unequal neighboring mesh refinement levels, the compact stencil maintains first order convergence. Due to its reduced stencil size (smaller memory footprint for the Jacobian matrix), its reduced computational expense, and demonstrated convergence properties, we generally recommend use of the compact stencil. The extended stencil is supposed to be more accurate <a href="#moukalled2016finite">Moukalled et al. (2016)</a>, so perhaps there is a bug in the implementation that needs to be found.</p><p>On regular, orthogonal grids, the face gradient <span class="moose-katex-inline-equation" id="moose-equation-bda30c27-b52b-4d78-90f2-f176c4cdd0b8"><script>var element = document.getElementById("moose-equation-bda30c27-b52b-4d78-90f2-f176c4cdd0b8");katex.render("\\nabla \\phi_f", element, {displayMode:false,throwOnError:false});</script></span> can be computed using a simple linear interpolation between neighboring cell gradients, e.g. between <span class="moose-katex-inline-equation" id="moose-equation-dad3760f-9c91-4574-8d1d-f08695c34c3a"><script>var element = document.getElementById("moose-equation-dad3760f-9c91-4574-8d1d-f08695c34c3a");katex.render("\\nabla \\phi_C", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-e6b5007e-2e12-416e-ac83-d7db2547d9b6"><script>var element = document.getElementById("moose-equation-e6b5007e-2e12-416e-ac83-d7db2547d9b6");katex.render("\\nabla \\phi_F", element, {displayMode:false,throwOnError:false});</script></span>. However, on non-orthgonal grids, some correction has to be made. The correction implemented is that shown in section 9.4 of <a href="#moukalled2016finite">Moukalled et al. (2016)</a>:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-69b9ecbe-992d-4e44-b3a7-590bb23b86a8"></span><script>var element = document.getElementById("moose-equation-69b9ecbe-992d-4e44-b3a7-590bb23b86a8");katex.render("\\nabla \\phi_f = \\overline{\\nabla \\phi}_f +     \\left[\\frac{\\phi_F - \\phi_C}{d_{CF}} - \\left(\\overline{\\nabla \\phi}_f \\cdot \\vec{e}_{CF}\\right)\\right]     \\vec{e}_{CF}", element, {displayMode:true,throwOnError:false});</script></span></p><p>where <span class="moose-katex-inline-equation" id="moose-equation-41ee51a9-0e1d-4212-ba89-a52a8aeb92ad"><script>var element = document.getElementById("moose-equation-41ee51a9-0e1d-4212-ba89-a52a8aeb92ad");katex.render("\\overline{\\nabla \\phi}_f", element, {displayMode:false,throwOnError:false});</script></span> denotes the linearly interpolated face pressure gradient.</p></section><section class="scrollspy" id="3bbe6d3d-202e-441f-8f67-ec0a4249ba5e" data-section-level="2" data-section-text="Known Limitations / Issues"><h2 id="known-limitations-issues">Known Limitations/Issues</h2><p>* FE &lt;&mdash;&gt; FV variable-coupling does not work.  Particularly, if FE   variables try to couple to an FV variable, they will segfault when trying to   access quadrature points at any index higher than zero.  Also, FV variables   coupling to FE variables should ideally get a cell-averaged value - but   currently, they will just get the value of the solution at the cell&#x27;s   0-index quadrature point. See   <a href="https://github.com/idaholab/moose/issues/15062">idaholab/moose#15062</a></p><p>* FV functionality does NOT work with mesh displacements yet. See   <a href="https://github.com/idaholab/moose/issues/15064">idaholab/moose#15064</a></p><p>* Have not tested vector-FV varaibles - they almost certainly don&#x27;t work (yet). </p></section><section class="scrollspy" id="e7291943-7477-4414-92b5-82bc52689738" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="moukalled2016finite">Fadl Moukalled, L&nbsp;Mangani, Marwan Darwish, and others.
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Finite Volume Design Decisions in MOOSE | Moltres</title><link href="../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/moltres.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Moltres</a><a href="https://github.com/arfc/moltres" class="right"><img src="../media/framework/github-logo.png" class="github-mark"></img><img src="../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="a631f9d1-8878-46a4-85e4-d9998d741384" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="c607424b-633d-4d25-97f9-31e030185e33" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="ca64e1b3-f4e5-40a2-b2e6-043e1306380f" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="dfdc2d48-1824-40dc-bdc0-fe84d54fe3d4"><i class="material-icons">menu</i></a><ul class="sidenav" id="dfdc2d48-1824-40dc-bdc0-fe84d54fe3d4"><li><a href="#!" class="dropdown-trigger" data-target="37028369-0e3d-4603-bbfa-a071227f6e16" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="7f09fbd6-4326-4fd9-8b94-604d7502873a" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="7d33f207-9a1a-4ca9-bac4-cd648c19f273" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="a631f9d1-8878-46a4-85e4-d9998d741384"><li><a href="../getting_started/installation.html">Install Moltres</a></li><li><a href="../getting_started/tutorials.html">Tutorials</a></li></ul><ul class="dropdown-content" id="c607424b-633d-4d25-97f9-31e030185e33"><li><a href="../syntax/index.html">Moltres Syntax</a></li><li><a href="https://mooseframework.inl.gov/source/index.html">MOOSE Syntax</a></li><li><a href="../doxygen/classes.html">Moltres Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="../development/contributing.html">Contributing</a></li><li><a href="../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="ca64e1b3-f4e5-40a2-b2e6-043e1306380f"><li><a href="https://github.com/arfc/moltres/discussions">Moltres Discussion Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussion Forum</a></li></ul><ul class="dropdown-content" id="37028369-0e3d-4603-bbfa-a071227f6e16"><li><a href="../getting_started/installation.html">Install Moltres</a></li><li><a href="../getting_started/tutorials.html">Tutorials</a></li></ul><ul class="dropdown-content" id="7f09fbd6-4326-4fd9-8b94-604d7502873a"><li><a href="../syntax/index.html">Moltres Syntax</a></li><li><a href="https://mooseframework.inl.gov/source/index.html">MOOSE Syntax</a></li><li><a href="../doxygen/classes.html">Moltres Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="../development/contributing.html">Contributing</a></li><li><a href="../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="7d33f207-9a1a-4ca9-bac4-cd648c19f273"><li><a href="https://github.com/arfc/moltres/discussions">Moltres Discussion Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussion Forum</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href="." class="breadcrumb">finite_volumes</a><a href="#" class="breadcrumb">fv_design</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="9d9727f5-f42d-4f61-8dce-22544049975c" data-section-level="1" data-section-text="Finite Volume Design Decisions in MOOSE"><h1 id="finite-volume-design-decisions-in-moose">Finite Volume Design Decisions in MOOSE</h1><p>MOOSE has traditionally been a finite element (FE) framework.  It is built on and takes heavy advantage of the libMesh FE library.  Traditionally, the finite volume (FV) method doesn&#x27;t really have shape-functions to describe continuous solutions within mesh cells.  Instead it uses a constant solution within each mesh element/cell. Because of this, much of MOOSE&#x27;s use of libMesh for FE is not relevant for FV.  This document gives an overview of how FV is similar and different from FE with respect to implementation in MOOSE and explains why FV is designed and implemented in its current form.  In order to fully enable taking advantage of perfomance opportunities and to simplify the FV method implementation in MOOSE, a new set of FV-specific systems was built along-side the MOOSE FE infrastructure.  As a new set of systems being created after MOOSE has received powerful automatic differentiation (AD) support, the FV systems (at least initially) are only being created with AD support in mind, and non-AD (manual Jacobian) versions will only be supported if a pressing need arises.</p><section class="scrollspy" id="d7a38030-f4df-48cb-ac9a-4ed2e86baac0" data-section-level="2" data-section-text="Variables"><h2 id="variables">Variables</h2><p>FV-specific (dependent) variable classes were create along side the FE-specific ones sharing common base functionality.  This is responsible for calculating and providing FV cell/face solution values to objects that need them.  Higher-order reconstruction will also be plumbed into here eventually. Ghost cells for boundary conditions and other important functionality is handled automatically at this level so kernel and boundary condition code can be written nearly like the FE equivalents.</p><p>Previously, the variable class hierarchy did not have a field-variable-specific intermediate class.  FV variables, however are field variables that need to be included in some field-variable operations performed in MOOSE.  This was not previously possible because FV variables would have to have shared their entire interface/API with FE variables - which would be a poor choice because of so many non-overlapping API needs between the two (e.g. no shape and test function related functions are needed for FV variables).  So a new field-variable intermediate class was introduced to the variable class heirarchy to facilitate appropriately separate APIs while allowing common operations to be performed on all field variables.</p></section><section class="scrollspy" id="89fe4f44-dcf1-4863-9660-309a5e1fec80" data-section-level="2" data-section-text="FV Kernels"><h2 id="fv-kernels">FV Kernels</h2><p>Flux Kernels:</p><p>The FV method uses the Gauss-divergence theorem to convert volume integrals with a divergence operator into surface integrals representing flux of various quantities through faces between mesh cells. Unlike FE kernels, no test/weight function is needed.  Coupling between cells occurs from this numerical flux calculation on a face contributing to the mesh cells on both sides of it (with opposing directional sign).  Calculating these numerical fluxes requires access to variable values and properties on both sides of each face.  FE kernels, on the other hand, require only the one set of volumetric/elemental values for the cell of interest.  FV kernels also need to deal with things such as normal face vectors, cross-diffusion correction factors for non-orthogonal meshes, etc.  All these differences make it impractical and messy to try to integrate them both into the same MOOSE kernel system and motivated the decision to create a separate FV kernel system.</p><p>Elemental Kernels:</p><p>The FV method does have some element-based calculations from source and time terms that are just handled/called through the normal FE elemental residual and jacobian mesh loops.  Time derivative kernels and source terms fall in this category.</p></section><section class="scrollspy" id="88704727-6731-48ff-b435-e81094c1e49d" data-section-level="2" data-section-text="Shape Functions and Integration"><h2 id="shape-functions-and-integration">Shape Functions and Integration</h2><p>Because some basic aspects of FV are &quot;simpler&quot; than FE, there is opportunity to operate with a lower computational cost per element than with the FE method.  The FV implementation does the following differently than FE:</p><p>* skips initialization/storage of shape-function data structures</p><p>* skips calculation of dependent variable values at quadrature-points - the   coefficients (degrees of freedom) from the solution vector(s) can be   directly used. FV only needs that one value per cell.</p><p>* skips element integration routines/loops not needed for FV&#x27;s   cell-constant solution.</p><p>Taking full advantage of these and other opportunities will take significant work and FV performance can be expected to improve over time.  Some quadrature point concepts have been retained for FV in MOOSE. This allows for future expansion to higher-order cell solution variable representations in addition to preserving similarity of APIs for users already familiar with MOOSE&#x27;s other objects and systems.</p></section><section class="scrollspy" id="762543f7-51e5-4a72-88e1-d872c1229f2a" data-section-level="2" data-section-text="Looping over Faces"><h2 id="looping-over-faces">Looping over Faces</h2><p>Significant portions of the FV method are naturally cell-face oriented. libMesh does not provide facilities for looping over and working with faces. FV-specific data structures were created to facilitate looping over mesh faces to compute residual contributions from numerical fluxes.</p><p>A face loop was implemented along side existing element, node, etc. loops used for FE.  This is used for calculating numerical flux contributions from FV kernels and boundary conditions.  The face info metadata needed for FV is gathered up front (and recomputed whenever the mesh changes) and cached in MOOSE&#x27;s mesh data structure.  Needs with respect to Dirichlet boundary conditions among other things influenced the decision to have a face info data structure become a hub for objects to retrieve relevant information for calculating residual contributions - more discussion about this is done in the Boundary Conditions section.</p></section><section class="scrollspy" id="da5ce418-93c0-4956-94d4-34338e9bd701" data-section-level="2" data-section-text="Boundary Conditions"><h2 id="boundary-conditions">Boundary Conditions</h2><p>Similar reasoning to decisions about the FV kernel system motivated the creation of a separate FV boundary condition system as well.  While FV flux/integrated boundary conditions are somewhat similar to FE integrated BCs, they still lack test/weight functions.  FV Dirichlet BCs, however must be implemented completedly differently than in FE and strongly motivate the creation of a separate FV BC system.</p><p>Dirichlet boundary conditions (BCs) in an FV method cannot be created by directly setting degrees of freedom like in an FE method because the FV degrees of freedom do not exist on the mesh boundary.  There are various approaches for dealing with this in FV.  A ghost-element approach was selected due to its popularity and robustness.  In this approach, Dirichlet BCs are implemented as a weak BC.  To do this, the normal flux kernel terms are applied at the mesh boundary faces.  Since flux kernels are calculated using information from cells on both sides of the face, we use the desired Dirichlet BC value to extrapolate a &quot;ghost&quot; cell value for the side of the face that has no actuall mesh cell.  Other necessary cell properties are also reflected/mirrored from the existing cell.  A design was chosen that allows handling ghost-element creation and use by existing flux kernels automatically for enforcement of Dirichlet BCs.  This procedure results in the Dirichlet BC objects not actually being respondible for calculating residual contributions. They instead inform the ghost-element initialization while the normal flux BCs are used to calculate boundary residual contributions.  This and other differences motivated the creation of a separate FV BC system.</p><p>Many objects in MOOSE get information about the current mesh location by directly accessing their own and inherited member variables.  This becomes somewhat tricky to handle for FV because of the nature of ghost elements. Traditionally, if an object needed the cell volume, it would access an element pointer and use libMesh APIs.  This doesn&#x27;t work for elements that don&#x27;t exist, yet we still need to provide this information for calculating Dirichlet BC residual contributions.  We need to be able to provide information that doesn&#x27;t exist and we need to make sure code doesn&#x27;t try to access irrelevant or wrong information directly from the assembly, FEProblem, or other classes. For this reason, among others, for FV objects the convention has been established for objects to retrieve needed information from a face info object that is passed around rather than retrieving binding references to the usual mesh-related data.  If everyone gets needed information from this one place - it is easy to monitor when code may be doing the wrong thing.  It also becomes a simple matter to provide volumes for non-existing cells and add features that require intercepting and modifying any face information objects need.</p></section><section class="scrollspy" id="68daaaaf-07c5-4c15-ae5e-9f90a433a6de" data-section-level="2" data-section-text="Reconstruction"><h2 id="reconstruction">Reconstruction</h2><p>Gradient reconstruction is implemented using the Green-Gauss method, e.g.</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-f887b261-f1f2-45bd-b756-82c6e97a0dd4"></span><script>var element = document.getElementById("moose-equation-f887b261-f1f2-45bd-b756-82c6e97a0dd4");katex.render("\\nabla \\phi_C = \\frac{1}{\\Omega} \\sum\\limits_{faces} \\phi_f \\vec{S}_f", element, {displayMode:true,throwOnError:false});</script></span></p><p>where <span class="moose-katex-inline-equation" id="moose-equation-bcdedf9d-08dd-47bf-b29e-506ad38c7b68"><script>var element = document.getElementById("moose-equation-bcdedf9d-08dd-47bf-b29e-506ad38c7b68");katex.render("\\phi_f", element, {displayMode:false,throwOnError:false});</script></span> is the value of the quantity of interest on the face and <span class="moose-katex-inline-equation" id="moose-equation-22e051eb-8e4a-4ade-a6b0-85defec15802"><script>var element = document.getElementById("moose-equation-22e051eb-8e4a-4ade-a6b0-85defec15802");katex.render("\\vec{S}_f", element, {displayMode:false,throwOnError:false});</script></span> is equal to the surface area times the outward normal, e.g. <span class="moose-katex-inline-equation" id="moose-equation-1d65de81-a8b4-4988-8ed9-8d9276e31ccf"><script>var element = document.getElementById("moose-equation-1d65de81-a8b4-4988-8ed9-8d9276e31ccf");katex.render("\\vec{S}_f = A\\hat{n}", element, {displayMode:false,throwOnError:false});</script></span>. The value of <span class="moose-katex-inline-equation" id="moose-equation-1e6ac2e0-a512-4d3f-b94d-d8746b9d94ac"><script>var element = document.getElementById("moose-equation-1e6ac2e0-a512-4d3f-b94d-d8746b9d94ac");katex.render("\\phi_f", element, {displayMode:false,throwOnError:false});</script></span> can be computed using central differences with or without skewness-correction. The skewness-correction of the compact (central-difference) stencil can be expressed as:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-329f7f8a-1849-4d19-9a92-19b31fdea6cd"></span><script>var element = document.getElementById("moose-equation-329f7f8a-1849-4d19-9a92-19b31fdea6cd");katex.render("\\phi_f = \\phi_{f'} + \\nabla \\phi_{f'} (\\vec{r}_{f'}-\\vec{r}_f),", element, {displayMode:true,throwOnError:false});</script></span></p><p>meaning that the approximate face value (<span class="moose-katex-inline-equation" id="moose-equation-e7ff533f-44a8-4312-85b2-fe256453cb62"><script>var element = document.getElementById("moose-equation-e7ff533f-44a8-4312-85b2-fe256453cb62");katex.render("\\phi_{f'}", element, {displayMode:false,throwOnError:false});</script></span>) at the intersection of the line connecting the cell centroids and the face (<span class="moose-katex-inline-equation" id="moose-equation-b54eee49-97a4-479c-9f9c-9d6e05df810a"><script>var element = document.getElementById("moose-equation-b54eee49-97a4-479c-9f9c-9d6e05df810a");katex.render("\\vec{r}_{f'}", element, {displayMode:false,throwOnError:false});</script></span>) is corrected using the approximate gradient at that point and a correction vector <span class="moose-katex-inline-equation" id="moose-equation-adf6e3ad-cfce-45b8-abb0-bacae9d43f38"><script>var element = document.getElementById("moose-equation-adf6e3ad-cfce-45b8-abb0-bacae9d43f38");katex.render("(\\vec{r}_{f'}-\\vec{r}_f)", element, {displayMode:false,throwOnError:false});</script></span>. This yields second order convergence on <a class="moose-source-filename tooltipped modal-trigger" href="#650e1d89-8993-48c1-bb39-2ec7337f49a8">skewed</a> meshes where the compact stencil falls back to first order. However, this comes with an additional computational cost in the system assembly process.</p><p>Due to its reduced stencil size (smaller memory footprint for the Jacobian matrix), its reduced computational expense, and demonstrated convergence properties, we generally recommend use of the compact stencil. The skewness-corrected stencil is demonstrated to be more accurate, however it considerably slows (a factor of approx. 2-3 depending on the caching options) down the assembly process due to the fact that additional face gradients need to be computed.</p><p>On regular, orthogonal grids, the face gradient <span class="moose-katex-inline-equation" id="moose-equation-6f0dd549-d537-47e0-9f6e-5bb7a25072c3"><script>var element = document.getElementById("moose-equation-6f0dd549-d537-47e0-9f6e-5bb7a25072c3");katex.render("\\nabla \\phi_f", element, {displayMode:false,throwOnError:false});</script></span> can be computed using a simple linear interpolation between neighboring cell gradients, e.g. between <span class="moose-katex-inline-equation" id="moose-equation-06af6ac8-05ab-45ed-84d5-28a6d3c92aeb"><script>var element = document.getElementById("moose-equation-06af6ac8-05ab-45ed-84d5-28a6d3c92aeb");katex.render("\\nabla \\phi_C", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-676f5a38-58a8-45ab-b9ef-304874e789df"><script>var element = document.getElementById("moose-equation-676f5a38-58a8-45ab-b9ef-304874e789df");katex.render("\\nabla \\phi_F", element, {displayMode:false,throwOnError:false});</script></span>. However, on non-orthgonal grids, some correction has to be made. The correction implemented is that shown in section 9.4 of <a href="#moukalled2016finite">Moukalled et al. (2016)</a>:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-7740dd08-0e20-4330-90a0-b9fdb345c2ab"></span><script>var element = document.getElementById("moose-equation-7740dd08-0e20-4330-90a0-b9fdb345c2ab");katex.render("\\nabla \\phi_f = \\overline{\\nabla \\phi}_f +     \\left[\\frac{\\phi_F - \\phi_C}{d_{CF}} - \\left(\\overline{\\nabla \\phi}_f \\cdot \\vec{e}_{CF}\\right)\\right]     \\vec{e}_{CF}", element, {displayMode:true,throwOnError:false});</script></span></p><p>where <span class="moose-katex-inline-equation" id="moose-equation-57eb08b6-d77e-411d-85b7-fb856bf8433c"><script>var element = document.getElementById("moose-equation-57eb08b6-d77e-411d-85b7-fb856bf8433c");katex.render("\\overline{\\nabla \\phi}_f", element, {displayMode:false,throwOnError:false});</script></span> denotes the linearly interpolated face pressure gradient.</p></section><section class="scrollspy" id="acd115cd-2f2b-4444-9ab8-108f5174e0ad" data-section-level="2" data-section-text="Known Limitations / Issues"><h2 id="known-limitations-issues">Known Limitations/Issues</h2><p>* FE &lt;&mdash;&gt; FV variable-coupling does not work.  Particularly, if FE   variables try to couple to an FV variable, they will segfault when trying to   access quadrature points at any index higher than zero.  Also, FV variables   coupling to FE variables should ideally get a cell-averaged value - but   currently, they will just get the value of the solution at the cell&#x27;s   0-index quadrature point. See   <a href="https://github.com/idaholab/moose/issues/15062">idaholab/moose#15062</a></p><p>* FV functionality does NOT work with mesh displacements yet. See   <a href="https://github.com/idaholab/moose/issues/15064">idaholab/moose#15064</a></p><p>* Have not tested vector-FV varaibles - they almost certainly don&#x27;t work (yet). </p></section><section class="scrollspy" id="1e0fb144-9d67-403c-9452-7b9225298d41" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="moukalled2016finite">Fadl Moukalled, L&nbsp;Mangani, Marwan Darwish, and others.
 <em>The finite volume method in computational fluid dynamics</em>.
 Volume&nbsp;6.
-Springer, 2016.<a href="#c2c5eec8-644f-458b-9a93-1bfc5906d42b" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="c2c5eec8-644f-458b-9a93-1bfc5906d42b"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@book{moukalled2016finite,
+Springer, 2016.<a href="#b82a2fd9-99e3-4f96-96e2-f3bac659eec1" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="b82a2fd9-99e3-4f96-96e2-f3bac659eec1"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@book{moukalled2016finite,
     author = "Moukalled, Fadl and Mangani, L and Darwish, Marwan and others",
     title = "The finite volume method in computational fluid dynamics",
     volume = "6",
     year = "2016",
     publisher = "Springer"
 }
-</code></pre></div></div></li></ol></div></section></section><div class="moose-modal modal" id="acb91c86-d383-4a88-bc66-704ecb5a1dde"><div class="modal-content"><h4>(moose/test/tests/fvkernels/mms/grad-reconstruction/extended-cartesian.i)</h4><pre class="moose-pre"><code class="language-text">a=1.1
+</code></pre></div></div></li></ol></div></section></section><div class="moose-modal modal" id="650e1d89-8993-48c1-bb39-2ec7337f49a8"><div class="modal-content"><h4>(moose/test/tests/fvkernels/mms/skewness-correction/adv-diff-react/skewed.i)</h4><pre class="moose-pre"><code class="language-text">a=1.1
 diff=1.1
 
 [Mesh]
-  [./gen_mesh]
-    type = GeneratedMeshGenerator
-    dim = 2
-    xmin = 0
-    xmax = 1
-    ymin = 0
-    ymax = 1
-    nx = 2
-    ny = 2
-  [../]
+  [gen_mesh]
+    type = FileMeshGenerator
+    file = skewed.msh
+  []
 []
 
-[Problem]
-  kernel_coverage_check = off
-[]
 
 [Variables]
-  [./v]
-    family = MONOMIAL
-    order = CONSTANT
-    fv = true
+  [v]
     initial_condition = 1
     type = MooseVariableFVReal
-    use_extended_stencil = true
-  [../]
+    face_interp_method = &#x27;skewness-corrected&#x27;
+    cache_face_gradients = false
+    cache_face_values = true
+  []
 []
 
 [FVKernels]
-  [./advection]
-    type = FVElementalAdvection
-    variable = v
-    velocity = &#x27;${a} ${fparse 2 * a} 0&#x27;
-    # going to request gradient reconstruction with an extended stencil
-    use_point_neighbors = true
-  []
-  [reaction]
-    type = FVReaction
-    variable = v
-  []
   [diff_v]
     type = FVDiffusion
     variable = v
     coeff = ${diff}
   []
-  [body_v]
-    type = FVBodyForce
-    variable = v
-    function = &#x27;forcing&#x27;
-  []
-[]
-
-[FVBCs]
-  [diri]
-    type = FVFunctionDirichletBC
-    boundary = &#x27;left right top bottom&#x27;
-    function = &#x27;exact&#x27;
-    variable = v
-  []
-[]
-
-[Functions]
-[exact]
-  type = ParsedFunction
-  value = &#x27;sin(x)*cos(y)&#x27;
-[]
-[forcing]
-  type = ParsedFunction
-  value = &#x27;-2*a*sin(x)*sin(y) + a*cos(x)*cos(y) + 2*diff*sin(x)*cos(y) + sin(x)*cos(y)&#x27;
-  vars = &#x27;a diff&#x27;
-  vals = &#x27;${a} ${diff}&#x27;
-[]
-[]
-
-[Executioner]
-  type = Steady
-  solve_type = &#x27;NEWTON&#x27;
-  petsc_options_iname = &#x27;-pc_type -sub_pc_factor_shift_type -sub_pc_type&#x27;
-  petsc_options_value = &#x27;asm      NONZERO                   lu&#x27;
-[]
-
-[Outputs]
-  exodus = true
-  csv = true
-[]
-
-[Postprocessors]
-  [./error]
-    type = ElementL2Error
-    variable = v
-    function = exact
-    outputs = &#x27;console csv&#x27;
-    execute_on = &#x27;timestep_end&#x27;
-  [../]
-  [h]
-    type = AverageElementSize
-    outputs = &#x27;console csv&#x27;
-    execute_on = &#x27;timestep_end&#x27;
-  []
-[]
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="5020d8e6-994f-4018-a657-cf26e71ce119"><div class="modal-content"><h4>(doc/non-orthogonal/advection-diffusion-reaction.i)</h4><pre class="moose-pre"><code class="language-text">a=1.1
-diff=1.1
-
-[Mesh]
-  [./gen_mesh]
-    type = GeneratedMeshGenerator
-    dim = 2
-    xmin = 2
-    xmax = 3
-    ymin = 0
-    ymax = 1
-    nx = 2
-    ny = 2
-    elem_type = TRI3
-  [../]
-[]
-
-[Problem]
-  kernel_coverage_check = off
-[]
-
-[Variables]
-  [./v]
-    family = MONOMIAL
-    order = CONSTANT
-    fv = true
-    initial_condition = 1
-  [../]
-[]
-
-[FVKernels]
-  [./advection]
+  [advection]
     type = FVAdvection
     variable = v
     velocity = &#x27;${a} ${fparse 2*a} 0&#x27;
     advected_interp_method = &#x27;average&#x27;
-  [../]
+  []
   [reaction]
     type = FVReaction
     variable = v
-  []
-  [diff_v]
-    type = FVDiffusion
-    variable = v
-    coeff = ${diff}
   []
   [body_v]
     type = FVBodyForce
@@ -180,257 +58,43 @@ diff=1.1
     boundary = &#x27;left right top bottom&#x27;
     function = &#x27;exact&#x27;
     variable = v
-  []
-[]
-
-[Functions]
-[exact]
-  type = ParsedFunction
-  value = &#x27;sin(x)*cos(y)&#x27;
-[]
-[forcing]
-  type = ParsedFunction
-  value = &#x27;-2*a*sin(x)*sin(y) + a*cos(x)*cos(y) + 2*diff*sin(x)*cos(y) + sin(x)*cos(y)&#x27;
-  vars = &#x27;a diff&#x27;
-  vals = &#x27;${a} ${diff}&#x27;
-[]
-[]
-
-[Executioner]
-  type = Steady
-  solve_type = &#x27;NEWTON&#x27;
-  petsc_options_iname = &#x27;-pc_type&#x27;
-  petsc_options_value = &#x27;hypre&#x27;
-[]
-
-[Outputs]
-  exodus = true
-  csv = true
-[]
-
-[Postprocessors]
-  [./error]
-    type = ElementL2Error
-    variable = v
-    function = exact
-    outputs = &#x27;console csv&#x27;
-    execute_on = &#x27;timestep_end&#x27;
-  [../]
-  [h]
-    type = AverageElementSize
-    outputs = &#x27;console csv&#x27;
-    execute_on = &#x27;timestep_end&#x27;
-  []
-[]
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="b586d215-375e-46bd-b5e4-841167e897f8"><div class="modal-content"><h4>(../../../../../extended-adr.i)</h4><pre class="moose-pre"><code class="language-text">a=1.1
-diff=1.1
-
-[Mesh]
-  [./gen_mesh]
-    type = GeneratedMeshGenerator
-    dim = 2
-    xmin = 2
-    xmax = 3
-    ymin = 0
-    ymax = 1
-    nx = 2
-    ny = 2
-    elem_type = TRI3
-  [../]
-[]
-
-[Problem]
-  kernel_coverage_check = off
-[]
-
-[Variables]
-  [./v]
-    family = MONOMIAL
-    order = CONSTANT
-    fv = true
-    initial_condition = 1
-    type = MooseVariableFVReal
-    use_extended_stencil = true
-  [../]
-[]
-
-[FVKernels]
-  [./advection]
-    type = FVAdvection
-    variable = v
-    velocity = &#x27;${a} ${fparse 2*a} 0&#x27;
-    advected_interp_method = &#x27;average&#x27;
-  [../]
-  [reaction]
-    type = FVReaction
-    variable = v
-  []
-  [diff_v]
-    type = FVDiffusion
-    variable = v
-    coeff = ${diff}
-    use_point_neighbors = true
-  []
-  [body_v]
-    type = FVBodyForce
-    variable = v
-    function = &#x27;forcing&#x27;
-  []
-[]
-
-[FVBCs]
-  [exact]
-    type = FVFunctionDirichletBC
-    boundary = &#x27;left right top bottom&#x27;
-    function = &#x27;exact&#x27;
-    variable = v
-  []
-[]
-
-[Functions]
-[exact]
-  type = ParsedFunction
-  value = &#x27;sin(x)*cos(y)&#x27;
-[]
-[forcing]
-  type = ParsedFunction
-  value = &#x27;-2*a*sin(x)*sin(y) + a*cos(x)*cos(y) + 2*diff*sin(x)*cos(y) + sin(x)*cos(y)&#x27;
-  vars = &#x27;a diff&#x27;
-  vals = &#x27;${a} ${diff}&#x27;
-[]
-[]
-
-[Executioner]
-  type = Steady
-  solve_type = &#x27;NEWTON&#x27;
-  petsc_options_iname = &#x27;-pc_type&#x27;
-  petsc_options_value = &#x27;hypre&#x27;
-[]
-
-[Outputs]
-  exodus = true
-  csv = true
-[]
-
-[Postprocessors]
-  [./error]
-    type = ElementL2Error
-    variable = v
-    function = exact
-    outputs = &#x27;console csv&#x27;
-    execute_on = &#x27;timestep_end&#x27;
-  [../]
-  [h]
-    type = AverageElementSize
-    outputs = &#x27;console csv&#x27;
-    execute_on = &#x27;timestep_end&#x27;
-  []
-[]
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="02a5bdd1-8722-4b5e-a4e2-71b8070183b2"><div class="modal-content"><h4>(doc/fv_adapt/steady-adapt.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
-  [gen]
-    type = GeneratedMeshGenerator
-    dim = 2
-    nx = 2
-    ny = 1
-    elem_type = QUAD4
-  []
-[]
-
-[Variables]
-  [u]
-    order = CONSTANT
-    family = MONOMIAL
-    fv = true
-    type = MooseVariableFVReal
-    use_extended_stencil = true
   []
 []
 
 [Functions]
   [exact]
     type = ParsedFunction
-    value = x
+    value = &#x27;sin(x)*cos(y)&#x27;
   []
-[]
-
-[FVKernels]
-  [diff]
-    type = FVDiffusion
-    variable = u
-    coeff = coeff
-    use_point_neighbors = true
-  []
-[]
-
-[FVBCs]
-  [right]
-    type = FVDirichletBC
-    variable = u
-    boundary = right
-    value = 1
-  []
-  [left]
-    type = FVDirichletBC
-    variable = u
-    boundary = left
-    value = 0
-  []
-[]
-
-[Materials]
-  [diff]
-    type = ADGenericConstantMaterial
-    prop_names = &#x27;coeff&#x27;
-    prop_values = &#x27;1&#x27;
+  [forcing]
+    type = ParsedFunction
+    value = &#x27;-2*a*sin(x)*sin(y) + a*cos(x)*cos(y) + 2*diff*sin(x)*cos(y) + sin(x)*cos(y)&#x27;
+    vars = &#x27;a diff&#x27;
+    vals = &#x27;${a} ${diff}&#x27;
   []
 []
 
 [Executioner]
   type = Steady
   solve_type = &#x27;NEWTON&#x27;
-  petsc_options_iname = &#x27;-pc_type&#x27;
-  petsc_options_value = &#x27;hypre&#x27;
-[]
-
-[Problem]
-  kernel_coverage_check = false
-[]
-
-[Adaptivity]
-  marker = box
-  initial_steps = 1
-  [Markers]
-    [box]
-      bottom_left = &#x27;0.5 0 0&#x27;
-      inside = refine
-      top_right = &#x27;1 1 0&#x27;
-      outside = do_nothing
-      type = BoxMarker
-    []
-  []
+  petsc_options_iname = &#x27;-pc_type -pc_hypre_type&#x27;
+  petsc_options_value = &#x27;hypre boomeramg&#x27;
 []
 
 [Outputs]
-  exodus = true
   csv = true
-  [console]
-    type = Console
-    system_info = &#x27;framework mesh aux nonlinear relationship execution&#x27;
-  []
 []
 
 [Postprocessors]
-  [error]
+  [./error]
     type = ElementL2Error
-    variable = u
+    variable = v
     function = exact
     outputs = &#x27;console csv&#x27;
-    execute_on = &#x27;timestep_end&#x27;
-  []
+  [../]
   [h]
     type = AverageElementSize
     outputs = &#x27;console csv&#x27;
-    execute_on = &#x27;timestep_end&#x27;
   []
 []
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#49a64f6c-5dac-4060-bb91-38671982d6f1" class="tooltipped" data-position="left" data-tooltip="Variables">Variables</a></li><li><a href="#4375e35c-4d92-4576-84ac-482894b74e42" class="tooltipped" data-position="left" data-tooltip="FV Kernels">FV Kernels</a></li><li><a href="#2999fd46-10b9-4e4d-b7cc-6857501ce4f9" class="tooltipped" data-position="left" data-tooltip="Shape Functions and Integration">Shape Functions and Integration</a></li><li><a href="#ac2d164d-3704-4c5b-aec9-586bf09adaaa" class="tooltipped" data-position="left" data-tooltip="Looping over Faces">Looping over Faces</a></li><li><a href="#cb1fcea7-fa0a-4d69-8d06-4eed235161c6" class="tooltipped" data-position="left" data-tooltip="Boundary Conditions">Boundary Conditions</a></li><li><a href="#54f541d5-3761-46b9-a119-be97435a24b7" class="tooltipped" data-position="left" data-tooltip="Reconstruction">Reconstruction</a></li><li><a href="#3bbe6d3d-202e-441f-8f67-ec0a4249ba5e" class="tooltipped" data-position="left" data-tooltip="Known Limitations / Issues">Known Limitations / Issues</a></li><li><a href="#e7291943-7477-4414-92b5-82bc52689738" class="tooltipped" data-position="left" data-tooltip="References">References</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../js/init.js"></script><script type="text/javascript" src="../js/navigation.js"></script><script type="text/javascript" src="../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../js/search_index.js"></script><script type="text/javascript" src="../js/sqa_moose.js"></script>
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#d7a38030-f4df-48cb-ac9a-4ed2e86baac0" class="tooltipped" data-position="left" data-tooltip="Variables">Variables</a></li><li><a href="#89fe4f44-dcf1-4863-9660-309a5e1fec80" class="tooltipped" data-position="left" data-tooltip="FV Kernels">FV Kernels</a></li><li><a href="#88704727-6731-48ff-b435-e81094c1e49d" class="tooltipped" data-position="left" data-tooltip="Shape Functions and Integration">Shape Functions and Integration</a></li><li><a href="#762543f7-51e5-4a72-88e1-d872c1229f2a" class="tooltipped" data-position="left" data-tooltip="Looping over Faces">Looping over Faces</a></li><li><a href="#da5ce418-93c0-4956-94d4-34338e9bd701" class="tooltipped" data-position="left" data-tooltip="Boundary Conditions">Boundary Conditions</a></li><li><a href="#68daaaaf-07c5-4c15-ae5e-9f90a433a6de" class="tooltipped" data-position="left" data-tooltip="Reconstruction">Reconstruction</a></li><li><a href="#acd115cd-2f2b-4444-9ab8-108f5174e0ad" class="tooltipped" data-position="left" data-tooltip="Known Limitations / Issues">Known Limitations / Issues</a></li><li><a href="#1e0fb144-9d67-403c-9452-7b9225298d41" class="tooltipped" data-position="left" data-tooltip="References">References</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../js/init.js"></script><script type="text/javascript" src="../js/navigation.js"></script><script type="text/javascript" src="../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../js/search_index.js"></script><script type="text/javascript" src="../js/sqa_moose.js"></script>
